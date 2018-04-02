@@ -5,8 +5,8 @@ require "Minitest/pride"
 
 class ParserTest < MiniTest::Test
   def setup
-    @request_lines = ["GET / HTTP/1.1",
-                      "Host: localhost:9292",
+    @env_hash = ["GET / HTTP/1.1",
+                      "Host: localhost:9292/",
                       "Connection: keep-alive",
                       "Upgrade-Insecure-Requests: 1",
                       "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
@@ -20,4 +20,46 @@ class ParserTest < MiniTest::Test
     assert_instance_of Parser, parser
   end
 
-end 
+  def test_parser_returns_correct_verb
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "GET", parser.verb
+  end
+
+  def test_parser_returns_correct_protocol
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "HTTP/1.1", parser.protocol
+  end
+
+  def test_parser_returns_correct_host
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "localhost", parser.path
+  end
+
+  def test_parser_returns_correct_path
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "/", parser.path
+  end
+
+  def test_parser_returns_correct_port
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "9292", parser.port
+  end
+
+  def test_parser_returns_correct_origin
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "localhost", parser.origin
+  end
+
+  def test_parser_returns_acceptance_type_correctly
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8", parser.accepts
+  end 
+
+end
