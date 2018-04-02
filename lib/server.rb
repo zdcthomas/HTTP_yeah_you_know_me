@@ -1,11 +1,12 @@
 require 'socket'
-
+require_relative './parser'
 class Serv
   attr_reader :tcp_server,
               :client,
               :request_lines
   def initialize(port)
     @tcp_server = TCPServer.new(port)
+    @parser = Parser.new
   end
 
   def begin_connection
@@ -35,6 +36,16 @@ class Serv
     @client.puts headers
     @client.puts output
     puts "Header: \n\r #{headers}\r\nResponse: #{string}"
+  end
+
+  def diagnostics
+    "<pre>
+    Verb: #{@parser["Verb"]}\n
+    Path: #{@parser["Path"]}\n
+    Protocol: #{@parser["Protocol"]}\n
+    Host: #{@parser["Host"]}\n
+    Port: #{@parser["Port"]}\n
+    Accepts: #{@parser["Accepts"]}\n"
   end
 
 end
