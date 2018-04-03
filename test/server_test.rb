@@ -14,10 +14,11 @@ class ServerTest < MiniTest::Test
     assert_instance_of Serv, server
   end
 
-  def test_begin_connection
-    server = Serv.new(9292)
-
-  end
+  # def test_begin_connection
+  #   server = Serv.new(9292)
+  #   assert_instance_of Socket, server.begin_connection
+  #   server.terminate
+  # end
 
   def test_it_can_receive_request_lines
   end

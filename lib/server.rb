@@ -11,13 +11,16 @@ class Serv
 
   def begin_connection
     @client = @tcp_server.accept
+    puts "Connection established"
   end
 
   def receive_request_lines
+    puts "Receiving Request Lines:"
     @request_lines = []
     while line = @client.gets and !line.chomp.empty?
       @request_lines << line.chomp
     end
+    puts "Request Lines Received:"
     @request_lines
   end
 
