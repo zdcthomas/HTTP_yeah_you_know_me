@@ -1,12 +1,10 @@
 require 'socket'
-require_relative './parser'
 class Serv
   attr_reader :tcp_server,
               :client,
               :request_lines
   def initialize(port)
     @tcp_server = TCPServer.new(port)
-    @parser = Parser.new
   end
 
   def begin_connection

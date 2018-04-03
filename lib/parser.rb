@@ -15,6 +15,7 @@ class Parser
     @env["Port"] = host_line[2]
     accept_line = request_lines[5].split(" ")
     @env["Accepts"] = accept_line[1]
+    @env
   end
 
   def diagnostic
