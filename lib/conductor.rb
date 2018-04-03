@@ -1,6 +1,8 @@
 require 'pry'
 require_relative './parser'
+require_relative './pages/shutdown'
 class Conductor
+  include ShutDown
   attr_reader :counter
   def initialize
     @parser = Parser.new
@@ -23,8 +25,8 @@ class Conductor
         @counter +=1
         Time.now.strftime('%I:%M%p on %A, %B %d, %Y')
       when "/shutdown"
-        # counter
-        # shutdown
+        @counter +=1
+        shutdown(@counter)
       when "/word_search"
       end
     end
