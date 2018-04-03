@@ -61,24 +61,36 @@ class ConductorTest < MiniTest::Test
      assert_equal "Hello World (0)", actual
    end
 
-   def test_hello_world_iterates
-     skip
-     conductor = Conductor.new
-     request_lines = ["GET /hello HTTP/1.1",
-                      "Host: localhost:9292/hello",
-                      "Connection: keep-alive",
-                      "Upgrade-Insecure-Requests: 1",
-                      "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
-                      "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-                      "Accept-Encoding: gzip, deflate, br",
-                      "Accept-Language: en-US,en;q=0.9"]
-      actual = conductor.conduct(request_lines)
-      assert_equal "Hello World (0)", actual
-      actual = conductor.conduct(request_lines)
-      assert_equal "Hello World (1)", actual
-      actual = conductor.conduct(request_lines)
-      assert_equal "Hello World (2)", actual
-   end
+  def test_hello_world_iterates
+    conductor = Conductor.new
+    request_lines = ["GET /hello HTTP/1.1",
+                    "Host: localhost:9292/hello",
+                    "Connection: keep-alive",
+                    "Upgrade-Insecure-Requests: 1",
+                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                    "Accept-Encoding: gzip, deflate, br",
+                    "Accept-Language: en-US,en;q=0.9"]
+    actual = conductor.conduct(request_lines)
+    assert_equal "Hello World (0)", actual
+    actual = conductor.conduct(request_lines)
+    assert_equal "Hello World (1)", actual
+    actual = conductor.conduct(request_lines)
+    assert_equal "Hello World (2)", actual
+  end
 
-
+  def test_it_displays_current_date_time
+    conductor = Conductor.new
+    request_lines = ["GET /datetime HTTP/1.1",
+                    "Host: localhost:9292/hello",
+                    "Connection: keep-alive",
+                    "Upgrade-Insecure-Requests: 1",
+                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                    "Accept-Encoding: gzip, deflate, br",
+                    "Accept-Language: en-US,en;q=0.9"]
+    actual = conductor.conduct(request_lines)
+    expected  = Time.now.strftime('%I:%M%p on %A, %B %d, %Y')
+    assert_equal expected, actual
+  end 
 end

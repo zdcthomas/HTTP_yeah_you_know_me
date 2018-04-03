@@ -20,7 +20,8 @@ class Conductor
         @counter +=1
         return "Hello World (#{@counter - 1})"
       when "/datetime"
-        # datetime
+        @counter +=1
+        Time.now.strftime('%I:%M%p on %A, %B %d, %Y')
       when "/shutdown"
         # counter
         # shutdown
