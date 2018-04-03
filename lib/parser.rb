@@ -16,4 +16,9 @@ class Parser
     accept_line = request_lines[5].split(" ")
     @env["Accepts"] = accept_line[1]
   end
+
+  def diagnostic
+    "<pre>\nVerb: #{@env["Verb"]}\nPath: #{@env["Path"]}\nProtocol: #{@env["Protocol"]}\nHost: #{@env["Host"]}\nPort: #{@env["Port"]}\nAccepts: #{@env["Accepts"]}\n"
+  end
+
 end

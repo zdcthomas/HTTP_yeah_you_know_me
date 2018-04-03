@@ -66,4 +66,10 @@ class ParserTest < MiniTest::Test
     assert_equal "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8", parser.env["Accepts"]
   end
 
+  def test_it_returns_accurate_diagnostic_verb
+    parser = Parser.new
+    parser.format_lines(@env_hash)
+    assert_equal "Verb: GET", parser.diagnostic.split("\n")[1]
+  end
+
 end
