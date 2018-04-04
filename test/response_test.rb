@@ -4,6 +4,7 @@ require_relative "../lib/response"
 
 class ResponseTest < MiniTest::Test
   def setup
+    
   end
 
   def test_it_exists

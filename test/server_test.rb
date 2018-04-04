@@ -8,10 +8,15 @@ require "Minitest/pride"
 
 class ServerTest < MiniTest::Test
   def setup
+    Thread.new do
+      @server = Serv.new(9292)
+    end
   end
+
+  def teardown
+
   def test_it_exists
-    server = Serv.new(9292)
-    assert_instance_of Serv, server
+    assert_instance_of Serv, @server
   end
 
   # def test_begin_connection
