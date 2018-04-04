@@ -1,8 +1,10 @@
 require 'pry'
 require_relative './parser'
 require_relative './pages/shutdown'
+require_relative './pages/word_search'
 class Conductor
   include ShutDown
+  include WordSearch
   attr_reader :counter
   def initialize
     @parser = Parser.new
@@ -28,6 +30,8 @@ class Conductor
         @counter +=1
         shutdown(@counter)
       when "/word_search"
+        @counter += 1
+        word_search(env[value])
       end
     end
 

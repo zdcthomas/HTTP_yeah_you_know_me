@@ -93,6 +93,7 @@ class ConductorTest < MiniTest::Test
     expected  = Time.now.strftime('%I:%M%p on %A, %B %d, %Y')
     assert_equal expected, actual
   end
+
   def test_it_shuts_down
     conductor = Conductor.new
     request_lines = ["GET /shutdown HTTP/1.1",
@@ -105,5 +106,33 @@ class ConductorTest < MiniTest::Test
                     "Accept-Language: en-US,en;q=0.9"]
     actual = conductor.conduct(request_lines)
     assert_equal ["Total Requests: 1", "exit"], actual
+  end
+
+  def test_conductor_runs_word_search_successfully
+    conductor = Conductor.new
+    request_lines =["GET /word_search?word=example HTTP/1.1",
+                    "Host: localhost:9292",
+                    "Connection: keep-alive",
+                    "Upgrade-Insecure-Requests: 1",
+                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                    "Accept-Encoding: gzip, deflate, br",
+                    "Accept-Language: en-US,en;q=0.9"]
+    actual = conductor.conduct(request_lines)
+    assert_equal "example is a known word", actual
+  end
+
+  def test_conductor_returns_correct_negative_word_search
+    conductor = Conductor.new
+    request_lines =["GET /word_search?word=blargh HTTP/1.1",
+                    "Host: localhost:9292",
+                    "Connection: keep-alive",
+                    "Upgrade-Insecure-Requests: 1",
+                    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.181 Safari/537.36",
+                    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                    "Accept-Encoding: gzip, deflate, br",
+                    "Accept-Language: en-US,en;q=0.9"]
+    actual = conductor.conduct(request_lines)
+    assert_equal "blargh is not a known word", actual
   end
 end
