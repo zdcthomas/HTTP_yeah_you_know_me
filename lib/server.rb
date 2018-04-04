@@ -1,3 +1,4 @@
+require 'pry'
 require 'socket'
 class Serv
   attr_reader :tcp_server,
@@ -15,11 +16,14 @@ class Serv
   def receive_request_lines
     puts "Receiving Request Lines:"
     @request_lines = []
+    # binding.pry
     while line = @client.gets and !line.chomp.empty?
+      # binding.pry
       @request_lines << line.chomp
     end
     puts "Request Lines Received:"
-    @request_lines
+    puts @request_lines
+    return @request_lines
   end
 
   def terminate

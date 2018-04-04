@@ -13,10 +13,11 @@ class Response
   end
 
   def respond_with_header
+    # binding.pry
     [@header, @output]
   end
 
   def report_response
-    "Header: \n\r #{@header}\r\nResponse: #{@output}"
+    "Header:\n\r#{@header}\r\nResponse:#{@output}"
   end
 end
