@@ -31,7 +31,7 @@ class Conductor
         shutdown(@counter)
       when "/word_search"
         @counter += 1
-        word_search(env[value])
+        word_search(env["Value"])
       end
     end
 
