@@ -13,6 +13,7 @@ class ParserTest < MiniTest::Test
                 "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
                 "Accept-Encoding: gzip, deflate, br",
                 "Accept-Language: en-US,en;q=0.9"]
+
     @request_hello = ["GET /hello HTTP/1.1",
                 "Host: localhost:9292",
                 "Connection: keep-alive",

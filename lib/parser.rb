@@ -1,3 +1,4 @@
+require 'pry'
 class Parser
   attr_reader :env
   def initialize
@@ -6,10 +7,16 @@ class Parser
   end
 
   def format_lines(request_lines)
-    first_split = request_lines[0].split(" ")
-    @env["Verb"] = first_split[0]
-    @env["Path"] = first_split[1]
-    @env["Protocol"] = first_split[2]
+    first_line = request_lines[0].split(" ")
+    @env["Verb"] = first_line[0]
+    @env["Path"] = first_line[1].split("?").first
+    # binding.pry
+    unless first_line[1].split("?")[1].nil?
+      @env["Parameter"] = first_line[1].split("?")[1].split("=")[0]
+      @env["Value"] = first_line[1].split("?")[1].split("=")[1]
+    end
+    
+    @env["Protocol"] = first_line[2]
     host_line = request_lines[1].split(":")
     @env["Host"] = host_line[1]
     @env["Port"] = host_line[2]
