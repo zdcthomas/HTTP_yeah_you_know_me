@@ -6,7 +6,17 @@ class Parser
   end
 
   def format_lines(request_lines)
-    # binding.pry
+    format_first_line(request_lines)
+    request_lines[1..-1].each do |line|
+      split_line = line.split(" ")
+      @env[split_line[0].delete(":")] = split_line[1]
+    end
+    @env["Port"] = @env["Host"].split(":")[1]
+    @env["Host"] = @env["Host"].split(":")[0]
+    @env
+  end
+
+  def format_first_line(request_lines)
     first_line = request_lines[0].split(" ")
     @env["Verb"] = first_line[0]
     @env["Path"] = first_line[1].split("?").first
@@ -15,15 +25,6 @@ class Parser
       @env["Parameter"] = first_line[1].split("?")[1].split("=")[0]
       @env["Value"] = first_line[1].split("?")[1].split("=")[1]
     end
-
-    request_lines[1..-1].each do |line|
-      split_line = line.split(" ")
-      @env[split_line[0].delete(":")] = split_line[1]
-    end
-
-    @env["Port"] = @env["Host"].split(":")[1]
-    @env["Host"] = @env["Host"].split(":")[0]
-    @env
   end
 
   def diagnostic
@@ -31,5 +32,5 @@ class Parser
     @env.each_pair{|key, value| env += "#{key}: #{value}\n" }
     env += "</pre>"
   end
-
+  
 end
