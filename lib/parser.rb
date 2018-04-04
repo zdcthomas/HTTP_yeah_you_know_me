@@ -15,18 +15,14 @@ class Parser
       @env["Parameter"] = first_line[1].split("?")[1].split("=")[0]
       @env["Value"] = first_line[1].split("?")[1].split("=")[1]
     end
+
     request_lines[1..-1].each do |line|
       split_line = line.split(" ")
-      # binding.pry
       @env[split_line[0].delete(":")] = split_line[1]
     end
+
     @env["Port"] = @env["Host"].split(":")[1]
     @env["Host"] = @env["Host"].split(":")[0]
-    # host_line = request_lines[1].split(":")
-    # @env["Host"] = host_line[1]
-    # @env["Port"] = host_line[2]
-    # accept_line = request_lines[5].split(" ")
-    # @env["Accepts"] = accept_line[1]
     @env
   end
 
