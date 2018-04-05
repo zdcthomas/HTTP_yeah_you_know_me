@@ -22,7 +22,7 @@ class ServerLoop
       puts @response.report_response
       @server.client.puts @response.respond_with_header.join
       # binding.pry
-      if page[1] == "exit"
+      if (page.class == Array) && (page[1]== "exit")
         exit
       end
       @server.terminate
