@@ -1,0 +1,10 @@
+
+my_files = FileList['test/**/*.rb']
+runner = FileList['lib/runner.rb']
+my_files.each do |file|
+  thr = Thread.new do
+    ruby runner
+  end
+  ruby file
+  Thread.kill(thr)
+end
