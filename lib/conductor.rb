@@ -10,7 +10,7 @@ class Conductor
   include WordSearch
   include YouKnowMe
   attr_reader :counter
-  def initialize(server)
+  def initialize(server = nil)
     @parser = Parser.new
     @counter = 0
     @server = server
@@ -64,7 +64,7 @@ class Conductor
           # binding.pry
           else
             @game.guess_answer(env["Value"].to_i)
-          end 
+          end
         else
           return "No game has been created"
         end

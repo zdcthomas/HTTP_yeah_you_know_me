@@ -4,7 +4,7 @@ require_relative "../lib/response"
 
 class ResponseTest < MiniTest::Test
   def setup
-    
+
   end
 
   def test_it_exists
@@ -37,7 +37,7 @@ class ResponseTest < MiniTest::Test
 
   def test_it_reports_response
     response = Response.new("Hello World")
-    expected = "Header: \n\r #{response.header}\r\nResponse: #{response.output}"
+    expected = "Header:\n\r#{response.header}\r\nResponse:#{response.output}"
     actual = response.report_response
     assert_equal expected, actual
   end

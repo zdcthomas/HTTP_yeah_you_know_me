@@ -1,6 +1,7 @@
 require_relative "../lib/conductor.rb"
 require "Minitest/autorun"
 require "Minitest/pride"
+require 'mocha'
 
 class ConductorTest < MiniTest::Test
 
@@ -43,8 +44,9 @@ class ConductorTest < MiniTest::Test
                      "Accept-Encoding: gzip, deflate, br",
                      "Accept-Language: en-US,en;q=0.9"]
     actual = conductor.conduct(request_lines)
-    expected = "<pre>\nVerb: GET\nPath: /\nProtocol: HTTP/1.1\nHost:  localhost\nPort: 9292\nAccepts: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\n"
-    assert_equal expected, actual
+
+    assert actual.include?("Host: localhost\n")
+    assert actual.include?("Upgrade-Insecure-Requests: 1")
   end
 
   def test_hello_returns_hello_world
