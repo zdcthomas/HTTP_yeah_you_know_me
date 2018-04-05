@@ -18,13 +18,18 @@ class Serv
     @request_lines = []
     # binding.pry
     while line = @client.gets and !line.chomp.empty?
-      # binding.pry
       @request_lines << line.chomp
+      @request_lines.compact!
     end
     puts "Request Lines Received:"
     puts @request_lines
     return @request_lines
   end
+
+  def read_body_from_post(bytes)
+    @client.read(bytes)
+  end
+
 
   def terminate
     @client.close

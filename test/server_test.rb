@@ -13,8 +13,6 @@ class ServerTest < MiniTest::Test
     end
   end
 
-  def teardown
-
   def test_it_exists
     assert_instance_of Serv, @server
   end

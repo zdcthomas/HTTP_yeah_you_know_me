@@ -7,7 +7,7 @@ require 'pry'
 class ServerLoop
   def initialize(port)
     @server = Serv.new(port)
-    @conductor = Conductor.new
+    @conductor = Conductor.new(@server)
   end
 
   def start_loop
@@ -22,7 +22,7 @@ class ServerLoop
       puts @response.report_response
       @server.client.puts @response.respond_with_header.join
       # binding.pry
-      if page[1] == "exit"
+      if (page.class == Array) && (page[1]== "exit")
         exit
       end
       @server.terminate
