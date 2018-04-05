@@ -1,3 +1,4 @@
+require 'pry'
 class Parser
   attr_reader :env
   def initialize
@@ -6,10 +7,13 @@ class Parser
   end
 
   def format_lines(request_lines)
+    # binding.pry
     format_first_line(request_lines)
     request_lines[1..-1].each do |line|
       split_line = line.split(" ")
-      @env[split_line[0].delete(":")] = split_line[1]
+      if line.include?(":")
+        @env[split_line[0].delete(":")] = split_line[1]
+      end 
     end
     @env["Port"] = @env["Host"].split(":")[1]
     @env["Host"] = @env["Host"].split(":")[0]
@@ -32,5 +36,5 @@ class Parser
     @env.each_pair{|key, value| env += "#{key}: #{value}\n" }
     env += "</pre>"
   end
-  
+
 end

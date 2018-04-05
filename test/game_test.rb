@@ -26,6 +26,7 @@ class GameTest < Minitest::Test
   def test_game_responds_to_correct_guess
     game = Game.new
     guess = game.answer
-    assert_equal "Correct!", game.guess_answer(guess)
+    game.guess_answer(guess)
+    assert_equal "Correct!", game.guesses[guess]
   end
 end

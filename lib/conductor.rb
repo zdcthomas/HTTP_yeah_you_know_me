@@ -10,9 +10,10 @@ class Conductor
   include WordSearch
   include YouKnowMe
   attr_reader :counter
-  def initialize
+  def initialize(server)
     @parser = Parser.new
     @counter = 0
+    @server = server
   end
 
 
@@ -55,7 +56,15 @@ class Conductor
         "Good Luck!"
       when "/game"
         if @game
-          @game.guess_answer(env["Value"].to_i)
+          if env["Content-Length"].to_i > 0
+            content_length = env["Content-Length"].to_i
+            body = @server.read_body_from_post(content_length)
+            guess = body.split("=")[1].to_i
+            @game.guess_answer(guess)
+          # binding.pry
+          else
+            @game.guess_answer(env["Value"].to_i)
+          end 
         else
           return "No game has been created"
         end

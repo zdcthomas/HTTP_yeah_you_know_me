@@ -7,7 +7,7 @@ require 'pry'
 class ServerLoop
   def initialize(port)
     @server = Serv.new(port)
-    @conductor = Conductor.new
+    @conductor = Conductor.new(@server)
   end
 
   def start_loop
